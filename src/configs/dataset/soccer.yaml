@@ -1,5 +1,5 @@
 name: soccer
-root_dir: /content/drive/MyDrive/Object_tracking/WASB-SBDT_ball_tracking/soccer
+root_dir: /content/drive/MyDrive/Object_tracking/datasets/soccer
 video_dirname: videos
 frame_dirname: frames
 anno_dirname: annos
