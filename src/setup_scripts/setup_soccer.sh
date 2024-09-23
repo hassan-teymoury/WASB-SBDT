@@ -1,6 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
-BASE_DIR=/content/
+BASE_DIR=/content/drive/MyDrive
 
 mkdir -p ${BASE_DIR}/datasets/soccer/videos
 
