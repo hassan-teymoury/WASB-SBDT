@@ -101,7 +101,7 @@ def inference_video(detector,
 
         if vis_frame_dir is not None:
             vis_frame_path = osp.join(vis_frame_dir, osp.basename(img_path)) if vis_frame_dir is not None else None
-            vis_gt         = cv2.imread(img_path)
+            # vis_gt         = cv2.imread(img_path)
             vis_pred       = cv2.imread(img_path)
 
             for cnt2, img_path2 in enumerate(result_dict.keys()):
@@ -113,21 +113,22 @@ def inference_video(detector,
                 visi_pred  = result_dict[img_path2]['visi']
                 score_pred = result_dict[img_path2]['score']
                 
-                center_gt = gt[img_path2]
+                # center_gt = gt[img_path2]
 
                 color_pred = (int(cm_pred(cnt2)[2]*255), int(cm_pred(cnt2)[1]*255), int(cm_pred(cnt2)[0]*255))
                 color_gt   = (int(cm_gt(cnt2)[2]*255), int(cm_gt(cnt2)[1]*255), int(cm_gt(cnt2)[0]*255))
-                vis_gt     = draw_frame(vis_gt, 
-                                    center = center_gt, 
-                                    color = color_gt,
-                                    radius=8)
+                # vis_gt     = draw_frame(vis_gt, 
+                #                     center = center_gt, 
+                #                     color = color_gt,
+                #                     radius=8)
 
                 vis_pred   = draw_frame(vis_pred, 
                                     center = Center(is_visible=visi_pred, x=x_pred, y=y_pred), 
                                     color = color_pred,
                                     radius=8)
 
-            vis = np.hstack((vis_gt, vis_pred))
+            # vis = np.hstack((vis_gt, vis_pred))
+            vis = vis_pred
             cv2.imwrite(vis_frame_path, vis)
 
         if vis_traj_path is not None:
