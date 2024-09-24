@@ -5,10 +5,10 @@ frame_dirname: frames
 anno_dirname: annos
 img_ext: '.png'
 video_ext: '.mp4'
-# train:
-#   videos:
+train:
+  videos:
     
-#   num_clip_ratio: 1.0
+  num_clip_ratio: 1.0
 test:
   videos:
     - ID-1
