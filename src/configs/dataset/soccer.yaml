@@ -7,11 +7,10 @@ img_ext: '.png'
 video_ext: '.mp4'
 train:
   videos:
-    
+    - ID-1
   num_clip_ratio: 1.0
 test:
   videos:
-    - ID-1
     - ID-2
     - ID-3
     - ID-4
