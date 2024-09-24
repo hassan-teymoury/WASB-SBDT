@@ -21,6 +21,7 @@ from utils import mkdir_if_missing, draw_frame, gen_video, Center, Evaluator
 
 from .base import BaseRunner
 
+
 log = logging.getLogger(__name__)
 
 @torch.no_grad()
@@ -28,9 +29,9 @@ def inference_video(detector,
                     tracker, 
                     dataloader,
                     cfg,
-                    vis_frame_dir=None, 
+                    vis_frame_dir="/content/drive/MyDrive/Object_tracking", 
                     vis_hm_dir=None, 
-                    vis_traj_path=None,
+                    vis_traj_path="/content/drive/MyDrive/Object_tracking",
                     evaluator_all=None, 
                     gt=None,
                     dist_thresh=10.,
@@ -132,9 +133,9 @@ def inference_video(detector,
         if vis_traj_path is not None:
             color_pred = (int(cm_pred(cnt)[2]*255), int(cm_pred(cnt)[1]*255), int(cm_pred(cnt)[0]*255))
             color_gt   = (int(cm_gt(cnt)[2]*255), int(cm_gt(cnt)[1]*255), int(cm_gt(cnt)[0]*255))
-            vis        = visualizer.draw_frame(vis, 
-                                               center_gt=center_gt, 
-                                               color_gt=color_gt,
+            vis        = draw_frame(vis, 
+                                               center=center_gt, 
+                                               color=color_gt,
                         )
 
     if vis_frame_dir is not None:
