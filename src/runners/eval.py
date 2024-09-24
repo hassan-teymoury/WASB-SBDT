@@ -134,9 +134,10 @@ def inference_video(detector,
             color_pred = (int(cm_pred(cnt)[2]*255), int(cm_pred(cnt)[1]*255), int(cm_pred(cnt)[0]*255))
             color_gt   = (int(cm_gt(cnt)[2]*255), int(cm_gt(cnt)[1]*255), int(cm_gt(cnt)[0]*255))
             vis        = draw_frame(vis, 
-                                               center=center_gt, 
-                                               color=color_gt,
+                                    center=center_gt, 
+                                    color=color_gt,
                         )
+            
 
     if vis_frame_dir is not None:
         video_path = '{}.mp4'.format(vis_frame_dir)
