@@ -140,9 +140,9 @@ def inference_video(detector,
                         )
             
 
-    if vis_frame_dir is not None:
-        video_path = '{}.mp4'.format(vis_frame_dir)
-        gen_video(video_path, vis_frame_dir, fps=25.0)
+    # if vis_frame_dir is not None:
+    #     video_path = '{}.mp4'.format(vis_frame_dir)
+    #     gen_video(video_path, vis_frame_dir, fps=25.0)
 
     if evaluator is not None:
         evaluator.print_results(with_ap=False)
