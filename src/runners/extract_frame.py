@@ -72,6 +72,7 @@ def extract_frame_soccer(cfg: DictConfig):
         cnt = 0
         while True:
             ret, frame = cap.read()
+            print(frame.shape)
             if not ret:
                 break
             frame_path = osp.join(frame_dir, '{:05d}{}'.format(cnt, img_ext))
