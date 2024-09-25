@@ -4,7 +4,7 @@ video_dirname: videos
 frame_dirname: frames
 anno_dirname: annos
 img_ext: '.png'
-video_ext: '.avi'
+video_ext: '.mp4'
 train:
   videos:
     - ID-2
@@ -12,5 +12,8 @@ train:
 test:
   videos:
     - ID-1
+    - ID-3
+    - ID-4
+    - ID-5
   num_clip_ratio: 1.0
 
