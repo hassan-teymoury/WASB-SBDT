@@ -15,7 +15,7 @@ mv ${BASE_DIR}/datasets/soccer/videos/"Film Role-0 ID-3 T-2 m00s00-000-m00s00-18
 mv ${BASE_DIR}/datasets/soccer/videos/"Film Role-0 ID-4 T-2 m00s00-000-m00s00-185.avi" ${BASE_DIR}/datasets/soccer/videos/ID-4.avi
 mv ${BASE_DIR}/datasets/soccer/videos/"Film Role-0 ID-5 T-2 m00s00-000-m00s00-185.avi" ${BASE_DIR}/datasets/soccer/videos/ID-5.avi
 mv ${BASE_DIR}/datasets/soccer/videos/"Film Role-0 ID-6 T-2 m00s00-000-m00s00-185.avi" ${BASE_DIR}/datasets/soccer/videos/ID-6.avi
-
+wget https://drive.google.com/uc?id=1Oqr33EXOEjERothXvVAqAeKiKuB-per1 -O ${BASE_DIR}/datasets/soccer/soccer_annos.zip
 if [ ! -f ${BASE_DIR}/datasets/soccer/soccer_annos.zip ]; then
 	wget https://drive.google.com/uc?id=1Oqr33EXOEjERothXvVAqAeKiKuB-per1 -O ${BASE_DIR}/datasets/soccer/soccer_annos.zip
 fi
