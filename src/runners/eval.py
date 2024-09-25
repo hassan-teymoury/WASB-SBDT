@@ -138,7 +138,7 @@ def inference_video(detector,
                                     center=center_gt, 
                                     color=color_gt,
                         )
-            
+        print(vis.shape)
 
     # if vis_frame_dir is not None:
     #     video_path = '{}.mp4'.format(vis_frame_dir)

@@ -22,5 +22,5 @@ fi
 
 unzip ${BASE_DIR}/datasets/soccer/soccer_annos.zip -d ${BASE_DIR}/datasets/soccer/
 
-# python3 main.py --config-name=extract_frame dataset=soccer
+python3 main.py --config-name=extract_frame dataset=soccer
 
