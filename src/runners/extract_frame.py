@@ -71,14 +71,17 @@ def extract_frame_soccer(cfg: DictConfig):
             assert 0, '{} cannot opened'.format(video_path)
         cnt = 0
         while True:
-            ret, frame = cap.read()
-            frame = cv2.resize(frame, (1920, 1088))
-            
-            if not ret:
-                break
-            frame_path = osp.join(frame_dir, '{:05d}{}'.format(cnt, img_ext))
-            cv2.imwrite(frame_path, frame)
-            cnt+=1
+            try:
+                ret, frame = cap.read()
+                frame = cv2.resize(frame, (1920, 1088))
+                
+                if not ret:
+                    break
+                frame_path = osp.join(frame_dir, '{:05d}{}'.format(cnt, img_ext))
+                cv2.imwrite(frame_path, frame)
+                cnt+=1
+            except:
+                pass
 
 def extract_frame(cfg: DictConfig):
     dataset_name = cfg['dataset']['name']
