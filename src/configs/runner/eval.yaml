@@ -1,5 +1,5 @@
 name: eval
-device: cuda
+device: cpu
 gpus: [0]
 vis_result: True
 vis_hm: True
