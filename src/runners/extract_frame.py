@@ -59,9 +59,9 @@ def extract_frame_soccer(cfg: DictConfig):
     for video in videos:
         video_path = osp.join(root_dir, video_dirname, '{}{}'.format(video, video_ext) )
         frame_dir  = osp.join(root_dir, frame_dirname, video )
-        if osp.exists(frame_dir) and not overwrite:
-            log.info('{} already exists. skip extracting frames'.format(frame_dir))
-            continue
+        # if osp.exists(frame_dir) and not overwrite:
+        #     log.info('{} already exists. skip extracting frames'.format(frame_dir))
+        #     continue
 
         log.info('extract frames in {} to {}'.format(video_path, frame_dir))
         mkdir_if_missing(frame_dir)
