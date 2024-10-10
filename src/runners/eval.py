@@ -23,11 +23,11 @@ import time
 
 
 yolo_data_path = "datasamples/ball_yolo_4.txt"
-time_data_path = "ball_yolo_time_data_4.csv"
+# time_data_path = "ball_yolo_time_data_4.csv"
 
-time_data = pd.read_csv(time_data_path)
-all_frame_counts = time_data["frame_count"].values.tolist()
-all_times = time_data["time"].values.tolist()
+# time_data = pd.read_csv(time_data_path)
+# all_frame_counts = time_data["frame_count"].values.tolist()
+# all_times = time_data["time"].values.tolist()
 
 yolo_data = pd.read_csv(yolo_data_path)
 
@@ -104,10 +104,10 @@ def inference_video(detector,
         visi_pred  = result_dict[img_path]['visi']
         score_pred = result_dict[img_path]['score']
         frame_count = cnt
-        frame_idx = all_frame_counts.index(cnt)
+        # frame_idx = all_frame_counts.index(cnt)
         
-        single_row = [all_times[frame_idx], x_pred, y_pred, mean_w, mean_h, score_pred, frame_count]
-        detected_data.append(single_row)
+        # single_row = [all_times[frame_idx], x_pred, y_pred, mean_w, mean_h, score_pred, frame_count]
+        # detected_data.append(single_row)
         center_gt = None
         if gt is not None:
             center_gt = gt[img_path]
