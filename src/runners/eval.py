@@ -97,7 +97,9 @@ def inference_video(detector,
     detected_data = []
     initial_time = 0
     for cnt, img_path in enumerate(result_dict.keys()):
-        
+        if cnt == 0:
+            video_id = img_path.split("_")[2]
+            print(img_path)
         xy_pred    = (result_dict[img_path]['x'], result_dict[img_path]['y'])
         x_pred = result_dict[img_path]['x']
         y_pred = result_dict[img_path]['y']
@@ -166,7 +168,7 @@ def inference_video(detector,
 
     if evaluator is not None:
         evaluator.print_results(with_ap=False)
-    video_id = img_path.split("_")[2]
+    
     detected_df = pd.DataFrame(data=detected_data, columns=yolo_cols)
     detected_df.to_csv(f"datasamples/ball_yolo_{video_id}.csv")
     return fp1_im_list, {'t_elapsed': t_elapsed, 'num_frames': num_frames}
