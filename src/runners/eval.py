@@ -22,7 +22,7 @@ from .base import BaseRunner
 import time
 
 
-yolo_data_path = "datasamples/ball_yolo_4.txt"
+yolo_data_path = "/content/WASB-SBDT/datasamples/ball_yolo_4.txt"
 # time_data_path = "ball_yolo_time_data_4.csv"
 
 # time_data = pd.read_csv(time_data_path)
