@@ -13,7 +13,6 @@ import torch
 from torch import nn
 import cv2
 import matplotlib.pyplot as plt
-
 from dataloaders import build_dataloader
 from detectors import build_detector
 from trackers import build_tracker
@@ -59,7 +58,7 @@ def inference_video(detector,
 
         batch_results, hms_vis = detector.run_tensor(imgs, trans)
         img_paths   = [list(in_tuple) for in_tuple in img_paths]
-
+        print(img_paths)
         for ib in batch_results.keys():
             for ie in batch_results[ib].keys():
                 img_path    = img_paths[ie][ib]
@@ -82,12 +81,15 @@ def inference_video(detector,
     fp1_im_list = []
     cnt = 0
     for cnt, img_path in enumerate(result_dict.keys()):
+        print("*"*100)
+        print(img_path)
         xy_pred    = (result_dict[img_path]['x'], result_dict[img_path]['y'])
         x_pred = result_dict[img_path]['x']
         y_pred = result_dict[img_path]['y']
         visi_pred  = result_dict[img_path]['visi']
         score_pred = result_dict[img_path]['score']
-
+        frame_count = cnt
+        
         center_gt = None
         if gt is not None:
             center_gt = gt[img_path]
@@ -105,6 +107,8 @@ def inference_video(detector,
             vis_pred       = cv2.imread(img_path)
 
             for cnt2, img_path2 in enumerate(result_dict.keys()):
+                print(img_path2)
+                print(cnt2)
                 if cnt2 > cnt:
                     break
 
@@ -129,7 +133,7 @@ def inference_video(detector,
 
             # vis = np.hstack((vis_gt, vis_pred))
             vis = vis_pred
-            cv2.imwrite(vis_frame_path, vis)
+            # cv2.imwrite(vis_frame_path, vis)
 
         if vis_traj_path is not None:
             color_pred = (int(cm_pred(cnt)[2]*255), int(cm_pred(cnt)[1]*255), int(cm_pred(cnt)[0]*255))
@@ -139,6 +143,7 @@ def inference_video(detector,
                                     color=color_gt,
                         )
         print(vis.shape)
+        print("*"*100)
 
     # if vis_frame_dir is not None:
     #     video_path = '{}.mp4'.format(vis_frame_dir)
