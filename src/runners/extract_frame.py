@@ -73,7 +73,7 @@ def extract_frame_soccer(cfg: DictConfig):
         while True:
             try:
                 ret, frame = cap.read()
-                frame = cv2.resize(frame, (1920, 1088))
+                # frame = cv2.resize(frame, (1920, 1088))
                 
                 if not ret:
                     break
