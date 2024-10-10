@@ -23,11 +23,11 @@ import time
 
 
 yolo_data_path = "/content/WASB-SBDT/datasamples/ball_yolo_4.txt"
-# time_data_path = "ball_yolo_time_data_4.csv"
+time_data_path = "ball_yolo_time_data_4.csv"
 
-# time_data = pd.read_csv(time_data_path)
-# all_frame_counts = time_data["frame_count"].values.tolist()
-# all_times = time_data["time"].values.tolist()
+time_data = pd.read_csv(time_data_path)
+all_frame_counts = time_data["frame_count"].values.tolist()
+all_times = time_data["time"].values.tolist()
 
 yolo_data = pd.read_csv(yolo_data_path, delim_whitespace=True)
 
@@ -97,19 +97,17 @@ def inference_video(detector,
     detected_data = []
     initial_time = 0
     for cnt, img_path in enumerate(result_dict.keys()):
-        if cnt == 0:
-            video_id = img_path.split("_")[2]
-            print(img_path)
+        
         xy_pred    = (result_dict[img_path]['x'], result_dict[img_path]['y'])
         x_pred = result_dict[img_path]['x']
         y_pred = result_dict[img_path]['y']
         visi_pred  = result_dict[img_path]['visi']
         score_pred = result_dict[img_path]['score']
         frame_count = cnt
-        # frame_idx = all_frame_counts.index(cnt)
+        frame_idx = all_frame_counts.index(cnt)
         
-        # single_row = [all_times[frame_idx], x_pred, y_pred, mean_w, mean_h, score_pred, frame_count]
-        # detected_data.append(single_row)
+        single_row = [all_times[frame_idx], x_pred, y_pred, mean_w, mean_h, score_pred, frame_count]
+        detected_data.append(single_row)
         center_gt = None
         if gt is not None:
             center_gt = gt[img_path]
@@ -168,9 +166,9 @@ def inference_video(detector,
 
     if evaluator is not None:
         evaluator.print_results(with_ap=False)
-    
+    print(img_paths)
     detected_df = pd.DataFrame(data=detected_data, columns=yolo_cols)
-    detected_df.to_csv(f"datasamples/ball_yolo_{video_id}.csv")
+    detected_df.to_csv(f"datasamples/ball_yolo_4.csv")
     return fp1_im_list, {'t_elapsed': t_elapsed, 'num_frames': num_frames}
 
 class VideosInferenceRunner(BaseRunner):
