@@ -168,7 +168,7 @@ def inference_video(detector,
         evaluator.print_results(with_ap=False)
     print(img_paths)
     detected_df = pd.DataFrame(data=detected_data, columns=yolo_cols)
-    detected_df.to_csv(f"datasamples/ball_yolo_4.csv")
+    detected_df.to_csv(f"/content/WASB-SBDT/datasamples/ball_yolo_4.csv")
     return fp1_im_list, {'t_elapsed': t_elapsed, 'num_frames': num_frames}
 
 class VideosInferenceRunner(BaseRunner):
