@@ -89,7 +89,8 @@ def extract_frame_soccer(cfg: DictConfig):
                 # current_time_formatted = f'{current_time:.6f}'
                 time_data.append([cnt, current_time])
                 
-                frame_path = osp.join(frame_dir, f"ball_yolo_{video.split('-')[-1]}_{cnt}.png")
+                # frame_path = osp.join(frame_dir, f"ball_yolo_{video.split('-')[-1]}_{cnt}.png")
+                frame_path = osp.join(frame_dir, '{:05d}{}'.format(cnt, img_ext))
                 cv2.imwrite(frame_path, frame)
                 cnt+=1
             except:
