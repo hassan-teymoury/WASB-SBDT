@@ -17,10 +17,23 @@ from dataloaders import build_dataloader
 from detectors import build_detector
 from trackers import build_tracker
 from utils import mkdir_if_missing, draw_frame, gen_video, Center, Evaluator
-
+import pandas as pd
 from .base import BaseRunner
+import time
 
 
+yolo_data_path = "datasamples/ball_yolo_4.txt"
+time_data_path = "ball_yolo_time_data_4.csv"
+
+time_data = pd.read_csv(time_data_path)
+all_frame_counts = time_data["frame_count"].values.tolist()
+all_times = time_data["time"].values.tolist()
+
+yolo_data = pd.read_csv(yolo_data_path)
+
+yolo_cols = yolo_data.columns.values.tolist()
+mean_w = float(yolo_data["w"].mean())
+mean_h = float(yolo_data["h"].mean())
 log = logging.getLogger(__name__)
 
 @torch.no_grad()
@@ -58,7 +71,7 @@ def inference_video(detector,
 
         batch_results, hms_vis = detector.run_tensor(imgs, trans)
         img_paths   = [list(in_tuple) for in_tuple in img_paths]
-        print(img_paths)
+        # print(img_paths)
         for ib in batch_results.keys():
             for ie in batch_results[ib].keys():
                 img_path    = img_paths[ie][ib]
@@ -80,16 +93,21 @@ def inference_video(detector,
 
     fp1_im_list = []
     cnt = 0
+    
+    detected_data = []
+    initial_time = 0
     for cnt, img_path in enumerate(result_dict.keys()):
-        print("*"*100)
-        print(img_path)
+        
         xy_pred    = (result_dict[img_path]['x'], result_dict[img_path]['y'])
         x_pred = result_dict[img_path]['x']
         y_pred = result_dict[img_path]['y']
         visi_pred  = result_dict[img_path]['visi']
         score_pred = result_dict[img_path]['score']
         frame_count = cnt
+        frame_idx = all_frame_counts.index(cnt)
         
+        single_row = [all_times[frame_idx], x_pred, y_pred, mean_w, mean_h, score_pred, frame_count]
+        detected_data.append(single_row)
         center_gt = None
         if gt is not None:
             center_gt = gt[img_path]
@@ -107,8 +125,6 @@ def inference_video(detector,
             vis_pred       = cv2.imread(img_path)
 
             for cnt2, img_path2 in enumerate(result_dict.keys()):
-                print(img_path2)
-                print(cnt2)
                 if cnt2 > cnt:
                     break
 
@@ -142,8 +158,7 @@ def inference_video(detector,
                                     center=center_gt, 
                                     color=color_gt,
                         )
-        print(vis.shape)
-        print("*"*100)
+        
 
     # if vis_frame_dir is not None:
     #     video_path = '{}.mp4'.format(vis_frame_dir)
@@ -151,7 +166,9 @@ def inference_video(detector,
 
     if evaluator is not None:
         evaluator.print_results(with_ap=False)
-
+    video_id = img_path.split("_")[2]
+    detected_df = pd.DataFrame(data=detected_data, columns=yolo_cols)
+    detected_df.to_csv(f"datasamples/ball_yolo_{video_id}.csv")
     return fp1_im_list, {'t_elapsed': t_elapsed, 'num_frames': num_frames}
 
 class VideosInferenceRunner(BaseRunner):

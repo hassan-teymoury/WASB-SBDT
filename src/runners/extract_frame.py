@@ -3,11 +3,16 @@ import os.path as osp
 import logging
 from omegaconf import DictConfig
 import cv2
-
+import time
 from .base import BaseRunner
 from utils import mkdir_if_missing
+import pandas as pd
+
 
 log = logging.getLogger(__name__)
+
+dst_dir_times = ""
+
 
 def extract_frame_badminton(cfg):
     root_dir      = cfg['dataset']['root_dir']
@@ -56,6 +61,7 @@ def extract_frame_soccer(cfg: DictConfig):
     overwrite     = cfg['runner']['overwrite']
     
     videos = train_videos + test_videos
+    
     for video in videos:
         video_path = osp.join(root_dir, video_dirname, '{}{}'.format(video, video_ext) )
         frame_dir  = osp.join(root_dir, frame_dirname, video )
@@ -67,9 +73,11 @@ def extract_frame_soccer(cfg: DictConfig):
         mkdir_if_missing(frame_dir)
 
         cap = cv2.VideoCapture(video_path)
+        fps = int(cap.get(cv2.CAP_PROP_FPS))
         if not cap.isOpened():
             assert 0, '{} cannot opened'.format(video_path)
         cnt = 0
+        time_data = []
         while True:
             try:
                 ret, frame = cap.read()
@@ -77,11 +85,17 @@ def extract_frame_soccer(cfg: DictConfig):
                 
                 if not ret:
                     break
-                frame_path = osp.join(frame_dir, '{:05d}{}'.format(cnt, img_ext))
+                current_time = cnt / fps
+                # current_time_formatted = f'{current_time:.6f}'
+                time_data.append([cnt, current_time])
+                
+                frame_path = osp.join(frame_dir, f'ball_yolo_{video.split('-')[-1]}_{cnt}.png')
                 cv2.imwrite(frame_path, frame)
                 cnt+=1
             except:
                 pass
+        time_data_df = pd.DataFrame(data=time_data, columns=["frame_count", "time"])
+        time_data_df.to_csv(f"ball_yolo_time_data_{video.split('-')[-1]}.csv")
 
 def extract_frame(cfg: DictConfig):
     dataset_name = cfg['dataset']['name']
