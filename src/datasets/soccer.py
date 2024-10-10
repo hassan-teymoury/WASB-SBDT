@@ -52,7 +52,8 @@ def load_xml(xml_path, frame_names=None, frame_dir=None):
 
     xyvs2 = {}
     for frame_name in frame_names:
-        ind = int( osp.splitext(frame_name)[0] )
+        ind = osp.splitext(frame_name)[0]
+        ind = int(ind.split("_")[2])
         if ind in xyvs.keys():
             xyvs2[ind] = xyvs[ind]
         else:
