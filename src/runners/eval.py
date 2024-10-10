@@ -29,7 +29,7 @@ yolo_data_path = "/content/WASB-SBDT/datasamples/ball_yolo_4.txt"
 # all_frame_counts = time_data["frame_count"].values.tolist()
 # all_times = time_data["time"].values.tolist()
 
-yolo_data = pd.read_csv(yolo_data_path)
+yolo_data = pd.read_csv(yolo_data_path, delim_whitespace=True)
 
 yolo_cols = yolo_data.columns.values.tolist()
 mean_w = float(yolo_data["w"].mean())
